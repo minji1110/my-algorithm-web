@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+
+    <title>My Record</title>
+
+    <!-- Bootstrap core CSS -->
+    <link
+      href="/bootstrap/vendor/bootstrap/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Custom styles for this template -->
+    <link href="/bootstrap/css/blog-post.css" rel="stylesheet" />
+    <link href="/css/common.css" rel="stylesheet" />
+    <!--google font-->
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="/bootstrap/vendor/fontawesome-free/css/all.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+  </head>
+
+  <body>
+    <!-- topbar -->
+    <div th:replace="./common/topbar :: topbar"></div>
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+      <!-- Topbar -->
+      <div
+        class="sidebar-wrapper"
+        th:replace="./common/sidebar :: sidebar"
+      ></div>
+
+      <div class="container-fluid">
+        <div class="card-body">
+          <form
+            role="form"
+            action="/problems"
+            th:object="${problemForm}"
+            method="post"
+          >
+            <div class="form-group">
+              <label th:for="problemNo">No. </label>
+              <span
+                class="error"
+                th:if="${#fields.hasErrors('problemNo')}"
+                th:errors="*{problemNo}"
+                >Error!</span
+              >
+
+              <input
+                type="text"
+                th:field="*{problemNo}"
+                class="form-control"
+                placeholder="Enter your problem number."
+                th:class="${#fields.hasErrors('problemNo')}? 'form-control fieldError' : 'form-control'"
+              />
+            </div>
+
+            <div class="form-group">
+              <label th:for="problemCategory">Category</label>
+              <span
+                class="error"
+                th:if="${#fields.hasErrors('problemCategory')}"
+                th:errors="*{problemCategory}"
+                >Error!</span
+              >
+
+              <select
+                class="form-control"
+                th:field="*{problemCategory}"
+                th:class="${#fields.hasErrors('problemCategory')}? 'form-control fieldError' : 'form-control'"
+              >
+                <option value="">-- Select category --</option>
+                <option
+                  th:each="category:${categories}"
+                  th:text="${category.categoryName}"
+                  th:value="${category.categoryName}"
+                ></option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label th:for="problemLevel">Level</label>
+
+              <span
+                class="error"
+                th:if="${#fields.hasErrors('problemLevel')}"
+                th:errors="*{problemLevel}"
+                >Error!</span
+              >
+
+              <select
+                class="form-control"
+                th:field="*{problemLevel}"
+                th:class="${#fields.hasErrors('problemLevel')}? 'form-control fieldError' : 'form-control'"
+              >
+                <option value="">-- Select level --</option>
+                <option
+                  th:each="level:${levels}"
+                  th:text="${level}"
+                  th:value="${level}"
+                ></option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label th:for="problemTitle">Title</label>
+              <span
+                class="error"
+                th:if="${#fields.hasErrors('problemTitle')}"
+                th:errors="*{problemTitle}"
+                >Error!</span
+              >
+
+              <input
+                type="text"
+                th:field="*{problemTitle}"
+                class="form-control"
+                placeholder="Enter your title."
+                th:class="${#fields.hasErrors('problemTitle')}? 'form-control fieldError' : 'form-control'"
+              />
+            </div>
+
+            <div class="form-group">
+              <label th:for="problemSolution">Code</label>
+              <span
+                class="error"
+                th:if="${#fields.hasErrors('problemSolution')}"
+                th:errors="*{problemSolution}"
+                >Error!</span
+              >
+              <textarea
+                rows="5"
+                th:field="*{problemSolution}"
+                class="form-control"
+                placeholder="Enter your code."
+              ></textarea>
+            </div>
+
+            <div class="form-group">
+              <label th:for="problemComment">Comment</label>
+              <textarea
+                rows="3"
+                th:field="*{problemComment}"
+                class="form-control"
+                placeholder="Enter your comment."
+              ></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-outline-secondary">
+              Submit
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!--modal-->
+    <div
+      class="modal fade"
+      id="addCategoryModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="addCategoryTitle"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="addCategoryTitle">Add Category</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form
+              role="form"
+              action="/addCategory"
+              th:object="${categoryForm}"
+              method="post"
+              class="needs-validation"
+              novalidate
+            >
+              <div class="form-group">
+                <label for="categoryName" class="col-form-label"
+                  >Category Name:
+                </label>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter Category Name."
+                  id="categoryName"
+                  name="categoryName"
+                  required
+                />
+                <div class="invalid-feedback">카테고리명을 입력하세요.</div>
+              </div>
+              <button type="submit" class="btn btn-primary">Add</button>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- <script>
+      var editor = ace.edit("code");
+      var textarea = $('textarea[name="code"]').hide();
+      editor.getSession().setValue(textarea.val());
+      editor.getSession().on("change", function () {
+        textarea.val(editor.getSession().getValue());
+      });
+    </script> -->
+
+    <!-- modal-->
+    <script>
+      (function () {
+        window.addEventListener(
+          "load",
+          function () {
+            var forms = document.getElementsByClassName("needs-validation");
+            var validation = Array.prototype.filter.call(
+              forms,
+              function (form) {
+                form.addEventListener(
+                  "submit",
+                  function (event) {
+                    if (form.checkValidity() === false) {
+                      event.preventDefault();
+                      event.stopPropagation();
+                    }
+                    form.classList.add("was-validated");
+                  },
+                  false
+                );
+              }
+            );
+          },
+          false
+        );
+      })();
+    </script>
+    <!-- Bootstrap core JavaScript-->
+    <script src="/bootstrap/vendor/jquery/jquery.min.js"></script>
+    <script src="/bootstrap/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="IE=edge" http-equiv="X-UA-Compatible" />
+    <meta
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+      name="viewport"
+    />
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+
+    <link
+      href="/bootstrap/vendor/fontawesome-free/css/all.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+
+    <title>My Blog</title>
+  </head>
+  <body>
+    <div class="sidebar-wrapper" th:fragment="sidebar">
+      <div class="my-side">
+        <!--Category-->
+        <ul style="height: 40vh" class="navbar-nav my-nav">
+          <!-- Sidebar - Brand -->
+          <div class="side-header">
+            <b>By Category</b>
+            <i
+              type="button"
+              class="fas fa-plus-circle"
+              data-toggle="modal"
+              data-target="#addCategoryModal"
+            >
+            </i>
+          </div>
+
+          <div class="side-list">
+            <li class="nav-item" th:each="category:${categories}">
+              <a
+                class="nav-link"
+                th:href="@{'/problem/category/'+${category.categoryId}}"
+              >
+                <span th:text="${category.categoryName}"></span>
+              </a>
+            </li>
+          </div>
+        </ul>
+
+        <!--Level-->
+        <ul style="height: 40vh" class="navbar-nav my-nav">
+          <div class="side-header"><b>By Level</b></div>
+
+          <div class="side-list">
+            <li class="nav-item">
+              <a class="nav-link" th:href="@{/problem/level/Bronze}">
+                <span>Bronze</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" th:href="@{/problem/level/Silver}">
+                <span>Silver</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" th:href="@{/problem/level/Gold}">
+                <span>Gold</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" th:href="@{/problem/level/Platinum}">
+                <span>Platinum</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" th:href="@{/problem/level/Diamond}">
+                <span>Diamond</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" th:href="@{/problem/level/Ruby}">
+                <span>Ruby</span>
+              </a>
+            </li>
+          </div>
+        </ul>
+      </div>
+      <!-- End of Sidebar -->
+    </div>
+  </body>
+</html>

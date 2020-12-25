@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+
+    <title>My Record</title>
+
+    <!-- Bootstrap core CSS -->
+    <link
+      href="/bootstrap/vendor/bootstrap/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Custom styles for this template -->
+    <link href="/bootstrap/css/blog-post.css" rel="stylesheet" />
+    <!--Common Styles-->
+    <link href="/css/common.css" rel="stylesheet" />
+    <!--google font-->
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="/bootstrap/vendor/fontawesome-free/css/all.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+  </head>
+  <body>
+    <div th:replace="./common/topbar::topbar"></div>
+
+    <div id="wrapper">
+      <div
+        class="sidebar-wrapper"
+        th:replace="./common/sidebar :: sidebar"
+      ></div>
+      <div class="container-fluid">
+        <div class="card-body">
+          <div class="problem-info">
+            <div class="icon-wrapper">
+              <i
+                class="far fa-trash-alt"
+                th:onclick="'deleteProblem('+ ${problem.problemId}+','+${problem.problemNo}  +')'"
+              ></i>
+              <i
+                class="fas fa-edit"
+                th:onclick="'location.href=\''+@{/problem/{id}/editForm(id=${problem.problemId})}+'\''"
+              ></i>
+            </div>
+            <div class="top-info">
+              <p style="font-weight: 700">
+                #<span th:text="${problem.problemNo} "></span>
+                <span th:text="${problem.problemTitle}"></span>
+              </p>
+              <span
+                style="font-size: small; color: gray"
+                th:text="${problem.createdDt}"
+              ></span>
+            </div>
+            <br />
+
+            <span style="font-size: larger">Code</span>
+            <span class="inner-info" th:text="${problem.problemSolution}"></span
+            ><br />
+
+            <span style="font-size: larger">Comment</span>
+            <span class="inner-info" th:text="${problem.problemComment}"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--modal-->
+    <div
+      class="modal fade"
+      id="addCategoryModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="addCategoryTitle"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="addCategoryTitle">Add Category</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form
+              role="form"
+              action="/addCategory"
+              th:object="${categoryForm}"
+              method="post"
+              class="needs-validation"
+              novalidate
+            >
+              <div class="form-group">
+                <label for="categoryName" class="col-form-label"
+                  >Category Name:
+                </label>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter Category Name."
+                  id="categoryName"
+                  name="categoryName"
+                  required
+                />
+                <div class="invalid-feedback">카테고리명을 입력하세요.</div>
+              </div>
+              <button type="submit" class="btn btn-primary">Add</button>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="/bootstrap/vendor/jquery/jquery.min.js"></script>
+    <script src="/bootstrap/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- common js -->
+    <script src="/javascript/problemDetail.js"></script>
+  </body>
+</html>
