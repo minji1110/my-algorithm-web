@@ -146,7 +146,7 @@
                 >Error!</span
               >
               <textarea
-                rows="5"
+                rows="10"
                 th:text="${problem.problemSolution}"
                 name="problemSolution"
                 th:class="${#fields.hasErrors('problemSolution')}? 'form-control fieldError' : 'form-control'"
@@ -157,6 +157,7 @@
             <div class="form-group">
               <label th:for="problemComment">Comment</label>
               <textarea
+                rows="5"
                 th:text="${problem.problemComment}"
                 name="problemComment"
                 class="form-control"
