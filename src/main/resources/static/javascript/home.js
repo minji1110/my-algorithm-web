@@ -3,7 +3,7 @@
 $("#all-problem").DataTable({
   paging: true,
   lengthChange: false,
-  pageLength: 7,
+  pageLength: 8,
   searching: false,
   order: [4, "desc"],
 });

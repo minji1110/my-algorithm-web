@@ -25,11 +25,11 @@ public class WebController {
     private final CategoryService categoryService;
     private final CategoryRepo categoryRepo;
 
-    @RequestMapping("/")
-    public String home(Model model){
+    @GetMapping("")
+    public String home(Model model) {
         List<Problem> problems=problemService.findAll();
-        List<Category> categories=categoryRepo.findAll();
-        model.addAttribute("problems",problems);
+        List<Category> categories = categoryRepo.findAll();
+        model.addAttribute("problems", problems);
         model.addAttribute("categories",categories);
         return "home";
     }
