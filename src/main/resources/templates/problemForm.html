@@ -66,7 +66,7 @@
                 type="text"
                 th:field="*{problemNo}"
                 class="form-control"
-                placeholder="Enter your problem number."
+                placeholder="문제 번호를 입력하세요."
                 th:class="${#fields.hasErrors('problemNo')}? 'form-control fieldError' : 'form-control'"
               />
             </div>
@@ -85,7 +85,7 @@
                 th:field="*{problemCategory}"
                 th:class="${#fields.hasErrors('problemCategory')}? 'form-control fieldError' : 'form-control'"
               >
-                <option value="">-- Select category --</option>
+                <option value="">-- 카테고리 선택 --</option>
                 <option
                   th:each="category:${categories}"
                   th:text="${category.categoryName}"
@@ -109,7 +109,7 @@
                 th:field="*{problemLevel}"
                 th:class="${#fields.hasErrors('problemLevel')}? 'form-control fieldError' : 'form-control'"
               >
-                <option value="">-- Select level --</option>
+                <option value="">-- 난이도 선택 --</option>
                 <option
                   th:each="level:${levels}"
                   th:text="${level}"
@@ -131,7 +131,7 @@
                 type="text"
                 th:field="*{problemTitle}"
                 class="form-control"
-                placeholder="Enter your title."
+                placeholder="문제 제목을 입력하세요."
                 th:class="${#fields.hasErrors('problemTitle')}? 'form-control fieldError' : 'form-control'"
               />
             </div>
@@ -148,7 +148,7 @@
                 rows="10"
                 th:field="*{problemSolution}"
                 class="form-control"
-                placeholder="Enter your code."
+                placeholder="코드를 입력하세요."
               ></textarea>
             </div>
 
@@ -158,7 +158,7 @@
                 rows="5"
                 th:field="*{problemComment}"
                 class="form-control"
-                placeholder="Enter your comment."
+                placeholder="코멘트를 입력하세요."
               ></textarea>
             </div>
 
