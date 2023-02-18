@@ -137,15 +137,41 @@
             </div>
 
             <div class="form-group">
+              <label th:for="problemLanguage">Language</label>
+
+              <span
+                      class="error"
+                      th:if="${#fields.hasErrors('problemLanguage')}"
+                      th:errors="*{problemLanguage}"
+              >Error!</span
+              >
+
+              <select
+                      class="form-control"
+                      id="language"
+                      th:field="*{problemLanguage}"
+                      th:class="${#fields.hasErrors('problemLanguage')}? 'form-control fieldError' : 'form-control'"
+              >
+                <option value="">-- 언어 선택 --</option>
+                <option
+                        th:each="language:${languages}"
+                        th:text="${language}"
+                        th:value="${language}"
+                ></option>
+              </select>
+            </div>
+
+            <div class="form-group">
               <label th:for="problemSolution">Code</label>
               <span
                 class="error"
                 th:if="${#fields.hasErrors('problemSolution')}"
                 th:errors="*{problemSolution}"
-                >Error!</span
-              >
+                >Error!</span>
+
               <textarea
-                rows="10"
+                id="code"
+                rows="25"
                 th:field="*{problemSolution}"
                 class="form-control"
                 placeholder="코드를 입력하세요."
@@ -231,15 +257,6 @@
       </div>
     </div>
 
-    <!-- <script>
-      var editor = ace.edit("code");
-      var textarea = $('textarea[name="code"]').hide();
-      editor.getSession().setValue(textarea.val());
-      editor.getSession().on("change", function () {
-        textarea.val(editor.getSession().getValue());
-      });
-    </script> -->
-
     <!-- modal-->
     <script>
       (function () {
@@ -271,5 +288,22 @@
     <!-- Bootstrap core JavaScript-->
     <script src="/bootstrap/vendor/jquery/jquery.min.js"></script>
     <script src="/bootstrap/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!--Code Mirror-->
+
+    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+
+    <link rel="stylesheet" href="/assets/codemirror/lib/codemirror.css">
+    <script type="text/javascript" src="/assets/codemirror/lib/codemirror.js"></script>
+    <script type="text/javascript" src="/assets/codemirror/src/codemirror.js"></script>
+
+    <script>
+      var textArea = document.getElementById('code');
+      var editor = CodeMirror.fromTextArea(textArea, {
+        lineNumbers: true
+      });
+    </script>
   </body>
 </html>

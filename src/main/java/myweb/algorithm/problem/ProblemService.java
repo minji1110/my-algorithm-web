@@ -25,6 +25,7 @@ public class ProblemService {
                 .problemComment(problemDto.getProblemComment())
                 .problemLevel(problemDto.getProblemLevel())
                 .problemCategory(categoryRepo.findByCategoryName(problemDto.getProblemCategory()))
+                .problemLanguage(problemDto.getProblemLanguage())
                 .build();
 
         return problemRepo.save(problem);
@@ -55,6 +56,7 @@ public class ProblemService {
         problem.setProblemComment(problemDto.getProblemComment());
         problem.setProblemLevel(problemDto.getProblemLevel());
         problem.setProblemNo(problemDto.getProblemNo());
+        problem.setProblemLanguage(problemDto.getProblemLanguage());
         problem.setProblemSolution(problemDto.getProblemSolution());
 
         return problem;

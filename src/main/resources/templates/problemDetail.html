@@ -32,6 +32,8 @@
       rel="stylesheet"
       type="text/css"
     />
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+    <link rel="stylesheet" href="/assets/prism/prism.css"/>
   </head>
   <body>
     <div th:replace="./common/topbar::topbar"></div>
@@ -64,14 +66,18 @@
                 th:text="${problem.createdDt}"
               ></span>
             </div>
-            <br />
 
-            <span style="font-size: larger">Code</span>
-            <span class="inner-info" th:text="${problem.problemSolution}"></span
-            ><br />
+            <div class="col-sm-12 mt-5">
+              <span style="font-weight: bold">Language: </span>
+              <span th:text="${problem.problemLanguage}"></span>
+              <pre class="line-numbers"><code th:class="${prelanguage}" th:text="${problem.problemSolution}"></code></pre>
+            </div>
 
-            <span style="font-size: larger">Comment</span>
-            <span class="inner-info" th:text="${problem.problemComment}"></span>
+            <div class="col-sm-12 mt-5">
+              <span style="font-weight: bold">Comment</span>
+              <pre><code th:class="language-markup" th:text="${problem.problemComment}"></code></pre>
+            </div>
+
           </div>
         </div>
       </div>
@@ -143,5 +149,7 @@
     <script src="/bootstrap/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- common js -->
     <script src="/javascript/problemDetail.js"></script>
+    <!--Prism-->
+    <script src="/assets/prism/prism.js"></script>
   </body>
 </html>

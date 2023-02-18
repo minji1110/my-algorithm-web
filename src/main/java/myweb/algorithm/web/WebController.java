@@ -6,10 +6,7 @@ import myweb.algorithm.category.CategoryDto;
 import myweb.algorithm.category.CategoryRepo;
 import myweb.algorithm.category.CategoryService;
 import myweb.algorithm.exception.NoDataException;
-import myweb.algorithm.problem.Level;
-import myweb.algorithm.problem.Problem;
-import myweb.algorithm.problem.ProblemDto;
-import myweb.algorithm.problem.ProblemService;
+import myweb.algorithm.problem.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,7 +22,7 @@ public class WebController {
     private final CategoryService categoryService;
     private final CategoryRepo categoryRepo;
 
-    @GetMapping("")
+    @GetMapping("/")
     public String home(Model model) {
         List<Problem> problems=problemService.findAll();
         List<Category> categories = categoryRepo.findAll();
@@ -37,10 +34,12 @@ public class WebController {
     @GetMapping("/problem/new")
     public String problemForm(Model model){
         Level[] levels = Level.class.getEnumConstants();
+        Language[] languages=Language.class.getEnumConstants();
         List<Category> categories=categoryRepo.findAll();
 
         model.addAttribute("problemForm",new ProblemDto());
         model.addAttribute("levels",levels);
+        model.addAttribute("languages",languages);
         model.addAttribute("categories",categories);
         return "problemForm";
     }
@@ -66,6 +65,7 @@ public class WebController {
 
         model.addAttribute("problem", problem);
         model.addAttribute("categories", categories);
+        model.addAttribute("prelanguage",problem.getProblemLanguage().getPreValue());
         return "problemDetail";
     }
     
@@ -73,12 +73,15 @@ public class WebController {
     public String editProblemForm(@PathVariable long problemId, Model model) {
         Problem problem = problemService.findOne(problemId);
         List<Category> categories = categoryRepo.findAll();
+        Language[] languages=Language.class.getEnumConstants();
         Level[] levels = Level.class.getEnumConstants();
 
         model.addAttribute("problemForm", new ProblemDto());
         model.addAttribute("problem", problem);
         model.addAttribute("categories", categories);
+        model.addAttribute("languages", languages);
         model.addAttribute("levels", levels);
+
         return "editProblemForm";
     }
 
@@ -88,17 +91,20 @@ public class WebController {
 
         Problem problem = problemService.findOne(problemId);
         Level[] levels = Level.class.getEnumConstants();
+        Language[] languages=Language.class.getEnumConstants();
         List<Category> categories=categoryRepo.findAll();
 
         if (result.hasErrors()) {
             model.addAttribute("problem", problem);
             model.addAttribute("levels",levels);
+            model.addAttribute("languages",languages);
             model.addAttribute("categories",categories);
             return "editProblemForm";
         }
         problemService.modify(problemId, problemDto);
         model.addAttribute("categories",categories);
         model.addAttribute("problem", problem);
+        model.addAttribute("prelanguage",problem.getProblemLanguage().getPreValue());
         return "problemDetail";
     }
 

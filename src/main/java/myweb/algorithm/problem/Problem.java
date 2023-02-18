@@ -15,7 +15,7 @@ public class Problem extends BaseTime {
 
     @Column
     @Id @GeneratedValue
-    private Long problemId;            //문제id
+    private Long problemId;     //문제id
 
     @Column(nullable = false)
     private int problemNo;      //문제번호
@@ -33,8 +33,11 @@ public class Problem extends BaseTime {
     @Column(nullable = false)
     private Level problemLevel;    //난이도
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Language problemLanguage;   //언어
+
     @JoinColumn(name = "categoryId")
     @ManyToOne(fetch = FetchType.LAZY)
     private Category problemCategory;    //카테고리
-
 }
